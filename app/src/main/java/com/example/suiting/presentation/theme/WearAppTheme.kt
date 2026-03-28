@@ -1,0 +1,15 @@
+package com.example.suiting.presentation.theme
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.dynamicColorScheme
+
+@Composable
+fun WearAppTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colorScheme = dynamicColorScheme(LocalContext.current) ?: wearColorScheme,
+        typography = Typography,
+        content = content
+    )
+}

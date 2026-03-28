@@ -1,0 +1,30 @@
+name: 依赖更新检查
+
+on:
+  schedule:
+    # 每周一上午 9:00 UTC 自动检查
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: 检查 Gradle 依赖更新
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: 赋予 Gradle 执行权限
+        run: chmod +x ./gradlew
+
+      - name: 检查依赖更新
+        run: ./gradlew dependencyUpdates --info
+        continue-on-error: true
